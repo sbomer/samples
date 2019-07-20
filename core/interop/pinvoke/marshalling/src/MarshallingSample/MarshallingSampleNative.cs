@@ -6,9 +6,17 @@ namespace MarshallingSample
     internal static class MarshallingSampleNative
     {
         #region String marshalling APIs
+        // Counts bytes in the UTF8 encoding of the string on unix,
+        // and the ANSI encoding on windows (where non-representable
+        // (16-bit) code units become single-byte question marks).
         [DllImport(nameof(MarshallingSampleNative), ExactSpelling = true, CharSet = CharSet.Ansi)]
         public static extern int CountBytesInString(string value);
 
+        // Counts (8-bit) code units in the UTF8 encoding of the string.
+        [DllImport(nameof(MarshallingSampleNative), ExactSpelling = true)]
+        public static extern int CountUtf8StringSize([MarshalAs(UnmanagedType.LPUTF8Str)] string value);
+
+        // Counts (16-bit) code units in the UTF16 encoding of the string.
         [DllImport(nameof(MarshallingSampleNative), ExactSpelling = true, CharSet = CharSet.Unicode)]
         public static extern int CountUtf16StringSize(string value);
 
@@ -22,6 +30,8 @@ namespace MarshallingSample
 #else
         private const CharSet PlatformSpecificCharSet = CharSet.Ansi;
 #endif
+        // Counts code units in the platform-specific (UTF8 on unix,
+        // UTF16 on windows) encoding of the string.
         [DllImport(nameof(MarshallingSampleNative), ExactSpelling = true, CharSet = PlatformSpecificCharSet)]
         public static extern int CountPlatformSpecificCharacters(string value);
 

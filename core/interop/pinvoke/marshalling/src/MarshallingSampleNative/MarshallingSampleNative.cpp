@@ -2,6 +2,7 @@
 #include <string>
 #include <string.h>
 #include <stdlib.h>
+#include <iostream>
 
 // string functions
 
@@ -9,6 +10,20 @@ extern "C" DLL_EXPORT int STDMETHODCALLTYPE CountBytesInString(char* value)
 {
     // value is ANSI (on Windows)/ UTF8 (on Linux/Mac) null-terminated string
     // and can be null.
+    if (value == nullptr)
+    {
+        return -1;
+    }
+    else
+    {
+        return strlen(value);
+    }
+}
+
+extern "C" DLL_EXPORT int STDMETHODCALLTYPE CountUtf8StringSize(char* value)
+{
+    // native implementation is same as CountBytesInString, but marshalling
+    // is specified as UTF8 on all platforms.
     if (value == nullptr)
     {
         return -1;
