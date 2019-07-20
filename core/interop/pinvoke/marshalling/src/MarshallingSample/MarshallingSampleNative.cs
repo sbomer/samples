@@ -132,5 +132,23 @@ namespace MarshallingSample
         [DllImport(nameof(MarshallingSampleNative), ExactSpelling = true)]
         public static extern Guid CountZeroGuids(Guid inValue, [MarshalAs(UnmanagedType.LPStruct)] Guid inRefA, [In] ref Guid inRefB, ref Guid inOutRef, out Guid outRef);
         #endregion
+
+        #region Function pointer marshalling
+        public delegate void ReturnVoidNoArguments();
+
+        [DllImport(nameof(MarshallingSampleNative), ExactSpelling = true)]
+        public static extern void CallFunctionPointer(ReturnVoidNoArguments fp);
+
+        [DllImport(nameof(MarshallingSampleNative), ExactSpelling = true)]
+        public static extern ReturnVoidNoArguments ReturnPrintStringFunctionPointer();
+
+        public delegate int ReturnIntAcceptingInts(int arg1, int arg2);
+
+        [DllImport(nameof(MarshallingSampleNative), ExactSpelling = true)]
+        public static extern int CallFunctionPointerReturningIntWithArguments(ReturnIntAcceptingInts fp, int arg1, int arg2);
+
+        [DllImport(nameof(MarshallingSampleNative), ExactSpelling = true)]
+        public static extern ReturnIntAcceptingInts ReturnSumIntsFunctionPointer();
+        #endregion
     }
 }

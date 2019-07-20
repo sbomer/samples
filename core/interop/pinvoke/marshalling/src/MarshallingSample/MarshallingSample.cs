@@ -13,6 +13,7 @@ namespace MarshallingSample
             EnumMarshalling.Run();
             NumericMarshalling.Run();
             GuidMarshalling.Run();
+            FunctionPointerMarshalling.Run();
 
             return 0;
         }

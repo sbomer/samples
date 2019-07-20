@@ -350,3 +350,33 @@ extern "C" DLL_EXPORT GUID STDMETHODCALLTYPE CountZeroGuids(GUID inValue, /*[In]
     resultGuid.Data1 = result;
     return resultGuid;
 }
+
+extern "C" DLL_EXPORT void STDMETHODCALLTYPE CallFunctionPointer(void (*fp)())
+{
+    fp();
+}
+
+static void PrintStringNative()
+{
+    std::cout << "in PrintStringNative" << std::endl;
+}
+
+extern "C" DLL_EXPORT void STDMETHODCALLTYPE (*ReturnPrintStringFunctionPointer())()
+{
+    return PrintStringNative;
+}
+
+extern "C" DLL_EXPORT int STDMETHODCALLTYPE CallFunctionPointerReturningIntWithArguments(int (*fp)(int, int), int arg1, int arg2)
+{
+    return fp(arg1, arg2);
+}
+
+static int SumIntsSimple(int arg1, int arg2)
+{
+    return arg1 + arg2;
+}
+
+extern "C" DLL_EXPORT int STDMETHODCALLTYPE (*ReturnSumIntsFunctionPointer())(int arg1, int arg2)
+{
+    return SumIntsSimple;
+}
