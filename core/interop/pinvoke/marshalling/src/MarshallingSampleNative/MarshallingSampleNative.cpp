@@ -376,7 +376,9 @@ static void PrintStringNative()
     std::cout << "in PrintStringNative" << std::endl;
 }
 
-extern "C" DLL_EXPORT void STDMETHODCALLTYPE (*ReturnPrintStringFunctionPointer())()
+typedef void (*VoidFunctionPointer)();
+
+extern "C" DLL_EXPORT VoidFunctionPointer STDMETHODCALLTYPE ReturnPrintStringFunctionPointer()
 {
     return PrintStringNative;
 }
@@ -391,7 +393,9 @@ static int SumIntsSimple(int arg1, int arg2)
     return arg1 + arg2;
 }
 
-extern "C" DLL_EXPORT int STDMETHODCALLTYPE (*ReturnSumIntsFunctionPointer())(int arg1, int arg2)
+typedef int (*IntFunctionPointer)(int arg1, int arg2);
+
+extern "C" DLL_EXPORT IntFunctionPointer STDMETHODCALLTYPE ReturnSumIntsFunctionPointer()
 {
     return SumIntsSimple;
 }
